@@ -11,7 +11,7 @@ git:
     - '**/*'
 secrets:
 - id: SOURCE_REPO
-  value: {{ .SOURCE_REPO }}
+  value: github.com
 shell:
   install:
   - cd /src
