@@ -11,7 +11,6 @@ config:
       - MODULE_EDITION
     allowUncommittedFiles:
       - "base_images.yml"
-      - ".*"
   secrets:
     allowValueIds:
       - GOPROXY

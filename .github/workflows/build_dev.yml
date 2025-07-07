@@ -42,11 +42,6 @@ jobs:
         env:
           DMT_METRICS_URL: ${{ secrets.DMT_METRICS_URL }}
           DMT_METRICS_TOKEN: ${{ secrets.DMT_METRICS_TOKEN }}
-      - name: Copy openapi/values_ee.yaml to openapi/values.yaml
-        run: |
-          if [ -f openapi/values_ee.yaml ]; then
-            cp -f openapi/values_ee.yaml openapi/values.yaml
-          fi
       - uses: deckhouse/modules-actions/lint@main
         env:
           DMT_METRICS_URL: ${{ secrets.DMT_METRICS_URL }}
