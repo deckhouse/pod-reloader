@@ -1,33 +1,23 @@
 giterminismConfigVersion: 1
 config:
-  goTemplateRendering:	# The rules for the Go-template functions to be able to pass build context to the release
+  goTemplateRendering: # The rules for the Go-template functions to be able to pass build context to the release
     allowEnvVariables:
       - /CI_.+/
-      - /REPO_MCM_.+/
-      - SOURCE_REPO
-      - GOPROXY
-      - WERF_DISABLE_META_TAGS
-      - CLOUD_PROVIDERS_SOURCE_REPO
-      - OBSERVABILITY_SOURCE_REPO
-      - DISTRO_PACKAGES_PROXY
-      - CARGO_PROXY
-      - DECKHOUSE_PRIVATE_REPO
-      - SVACE_ENABLED
-      - SVACE_ANALYZE_HOST
-      - SVACE_ANALYZE_SSH_USER
       - MODULES_MODULE_TAG
+      - WERF_DISABLE_META_TAGS
+      - GOLANG_VERSION
+      - GOPROXY
+      - SOURCE_REPO
+      - MODULE_EDITION
     allowUncommittedFiles:
-    - "base_images.yml"
+      - "base_images.yml"
   secrets:
     allowValueIds:
-      - SOURCE_REPO
       - GOPROXY
-      - CLOUD_PROVIDERS_SOURCE_REPO
-      - CARGO_PROXY
-      - DECKHOUSE_PRIVATE_REPO
+      - GOLANG_VERSION
+      - SOURCE_REPO
   stapel:
     mount:
       allowBuildDir: true
       allowFromPaths:
         - ~/go-pkg-cache
-        - ~/.docker

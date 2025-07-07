@@ -1,0 +1,8 @@
+# Edition module settings, default ce
+{{- $_ := set . "MODULE_EDITION" (env "MODULE_EDITION" "ce") }}
+
+# component versions
+{{- $versions := dict }}
+{{- $_ := set $versions "POD_RELOADER" "v1.2.1" }}
+
+{{- $_ := set . "VERSIONS" $versions }}

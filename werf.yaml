@@ -1,17 +1,18 @@
-project: echoserver
+project: pod-reloader
 configVersion: 1
 build:
   imageSpec:
     author: "Deckhouse Kubernetes Platform <contact@deckhouse.io>"
     clearHistory: true
     config:
-      clearWerfLabels: true
+      keepEssentialWerfLabels: true
       removeLabels:
         - /.*/
 ---
-{{ tpl (.Files.Get ".werf/stages/base-images.yaml") $ }}
-{{ tpl (.Files.Get ".werf/stages/images.yaml") $ }}
-{{ tpl (.Files.Get ".werf/stages/images-digests.yaml") $ }}
-{{ tpl (.Files.Get ".werf/stages/batch-go.yaml") $ }}
-{{ tpl (.Files.Get ".werf/stages/bundle.yaml") $ }}
-{{ tpl (.Files.Get ".werf/stages/release.yaml") $ }}
+{{ tpl (.Files.Get ".werf/base-images.yaml") $ }}
+{{ tpl (.Files.Get ".werf/consts.yaml") $ }}
+{{ tpl (.Files.Get ".werf/choose-edition.yaml") $ }}
+{{ tpl (.Files.Get ".werf/images.yaml") $ }}
+{{ tpl (.Files.Get ".werf/images-digests.yaml") $ }}
+{{ tpl (.Files.Get ".werf/bundle.yaml") $ }}
+{{ tpl (.Files.Get ".werf/release.yaml") $ }}

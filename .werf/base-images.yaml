@@ -16,3 +16,4 @@ image: {{ $k }}
 from: {{ $v }}
 final: false
 {{- end }}
+
