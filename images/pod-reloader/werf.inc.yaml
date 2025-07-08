@@ -18,7 +18,8 @@ shell:
   install:
   - cd /src
   - git clone --depth 1 -b {{ $version }} $(cat /run/secrets/SOURCE_REPO)/stakater/Reloader.git .
-  - for patchfile in /patches/images/{{ $.ImageName }}/patches/*.patch; do echo "Apply ${patchfile} ... "; git apply ${patchfile} --verbose; done
+  # uncomment if patch needed
+  # - for patchfile in /patches/images/{{ $.ImageName }}/patches/*.patch; do echo "Apply ${patchfile} ... "; git apply ${patchfile} --verbose; done
   - rm -rf .git
 ---
 image: {{ .ModuleNamePrefix }}{{ .ImageName }}-artifact
