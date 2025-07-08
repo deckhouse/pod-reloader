@@ -44,10 +44,6 @@ jobs:
         env:
           DMT_METRICS_URL: ${{ secrets.DMT_METRICS_URL }}
           DMT_METRICS_TOKEN: ${{ secrets.DMT_METRICS_TOKEN }}
-      - uses: deckhouse/modules-actions/lint@main
-        env:
-          DMT_METRICS_URL: ${{ secrets.DMT_METRICS_URL }}
-          DMT_METRICS_TOKEN: ${{ secrets.DMT_METRICS_TOKEN }}
 
   set_edition:
     runs-on: [self-hosted, large]
