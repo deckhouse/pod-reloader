@@ -3,6 +3,6 @@
 
 # component versions
 {{- $versions := dict }}
-{{- $_ := set $versions "POD_RELOADER" "v1.4.5" }}
+{{- $_ := set $versions "POD_RELOADER" "v1.2.1" }}
 
 {{- $_ := set . "VERSIONS" $versions }}
