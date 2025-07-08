@@ -70,6 +70,7 @@ spec:
         - name: manager
           {{- include "helm_lib_module_container_security_context_read_only_root_filesystem_capabilities_drop_all" . | nindent 10 }}
           image: {{ include "helm_lib_module_image" (list . "podReloader") }}
+          command: ["/reloader"]
           args:
             - --log-format=json
             - --auto-annotation=pod-reloader.deckhouse.io/auto
