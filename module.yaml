@@ -1,5 +1,5 @@
 name: pod-reloader
-weight: 465
+weight: 900
 stage: "General Availability"
 subsystems:
   - infrastructure
