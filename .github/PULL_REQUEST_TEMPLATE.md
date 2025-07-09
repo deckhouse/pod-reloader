@@ -16,13 +16,6 @@
   If it fixes an obvious bug, please tell users about the impact and effect of the problem.
 -->
 
-## What is the expected result?
-<!---
-  How can one check these changes after applying?  
-
-  Describe, what (resource, state, event, etc.) MUST or MUST NOT change/happen after applying these changes.
--->
-
 ## Checklist
 - [ ] The code is covered by unit tests.
 - [ ] e2e tests passed.

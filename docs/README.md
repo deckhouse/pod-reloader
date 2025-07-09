@@ -6,9 +6,9 @@ The module utilizes [Reloader](https://github.com/stakater/Reloader).
 It provides the ability for automatic rollout on ConfigMap or Secret changes.
 The module uses annotations for operating. The module is running on **system** nodes.
 
-{% alert level="info" %}
+{{< alert level="info" >}}
 Reloader does not have HighAvailability mode.
-{% endalert %}
+{{< endalert >}}
 
 All annotations are described here. You can find examples in the [Examples](examples.html) section of the documentation.
 
