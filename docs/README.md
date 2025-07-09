@@ -8,7 +8,7 @@ The module uses annotations for operating. The module is running on **system** n
 
 {{< alert level="info" >}}
 Reloader does not have HighAvailability mode.
-{{< endalert >}}
+{{< /alert >}}
 
 All annotations are described here. You can find examples in the [Examples](examples.html) section of the documentation.
 
