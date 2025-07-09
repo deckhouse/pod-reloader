@@ -14,11 +14,6 @@ env:
   SOURCE_REPO: ${{ secrets.SOURCE_REPO }}
 
 on:
-  pull_request:
-    types: [opened, reopened, labeled, synchronize]
-  push:
-    branches:
-      - main
   workflow_dispatch:
     inputs:
       channel:
