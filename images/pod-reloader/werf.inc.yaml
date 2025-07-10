@@ -1,0 +1,44 @@
+---
+image: {{ .ModuleNamePrefix }}{{ .ImageName }}-src-artifact
+fromImage: builder/src
+final: false
+secrets:
+- id: SOURCE_REPO
+  value: {{ .SOURCE_REPO }}
+shell:
+  install:
+  - cd /src
+  - git clone --depth 1 -b {{ $.Versions.POD_RELOADER }} $(cat /run/secrets/SOURCE_REPO)/stakater/Reloader.git .
+  - rm -rf .git
+---
+image: {{ .ModuleNamePrefix }}{{ .ImageName }}-artifact
+final: false
+fromImage: builder/golang-alpine
+import:
+- image: {{ .ModuleNamePrefix }}{{ .ImageName }}-src-artifact
+  add: /src
+  to: /src
+  before: install
+mount:
+{{ include "mount points for golang builds" . }}
+secrets:
+- id: GOPROXY
+  value: {{ .GOPROXY }}
+shell:
+  install:
+  - export GO_VERSION=${GOLANG_VERSION} GOPROXY=$(cat /run/secrets/GOPROXY) CGO_ENABLED=0 GOOS=linux GOARCH=amd64
+  - cd /src
+  - GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -ldflags="-s -w" -o /reloader main.go
+  - chown 64535:64535 /reloader
+  - chmod 0755 /reloader
+---
+image: {{ .ModuleNamePrefix }}{{ .ImageName }}
+fromImage: base/distroless
+import:
+- image: {{ .ModuleNamePrefix }}{{ .ImageName }}-artifact
+  add: /reloader
+  to: /reloader
+  before: setup
+imageSpec:
+  config:
+    entrypoint: ["/reloader"]

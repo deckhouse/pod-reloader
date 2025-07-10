@@ -1,0 +1,31 @@
+# Bundle image, stored in your.registry.io/modules/<module-name>:<semver>
+---
+image: bundle
+fromImage: builder/scratch
+
+import:
+  # Rendering .werf/images-digests.yaml is required!
+  - image: images-digests
+    add: /images_digests.json
+    to: /images_digests.json
+    after: setup
+  # Rendering .werf/choose-edition.yaml is required!
+  - image: choose-edition
+    add: /openapi
+    to: /openapi
+    after: setup
+git:
+  - add: /
+    to: /
+    excludePaths:
+      - hooks/go
+    includePaths:
+      - .helmignore
+      - charts
+      - crds
+      - docs
+      - hooks
+      - monitoring
+      - templates
+      - Chart.yaml
+      - module.yaml
