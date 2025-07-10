@@ -2,15 +2,6 @@
 image: {{ .ModuleNamePrefix }}{{ .ImageName }}-src-artifact
 fromImage: builder/src
 final: false
-# uncomment if patch needed
-#git:
-#- add: {{ .ModuleDir }}
-#  to: /patches
-#  includePaths:
-#    - images/{{ $.ImageName }}/patches
-#  stageDependencies:
-#    install:
-#    - '**/*'
 secrets:
 - id: SOURCE_REPO
   value: {{ .SOURCE_REPO }}
@@ -18,8 +9,6 @@ shell:
   install:
   - cd /src
   - git clone --depth 1 -b {{ $.Versions.POD_RELOADER }} $(cat /run/secrets/SOURCE_REPO)/stakater/Reloader.git .
-  # uncomment if patch needed
-  # - for patchfile in /patches/images/{{ $.ImageName }}/patches/*.patch; do echo "Apply ${patchfile} ... "; git apply ${patchfile} --verbose; done
   - rm -rf .git
 ---
 image: {{ .ModuleNamePrefix }}{{ .ImageName }}-artifact
