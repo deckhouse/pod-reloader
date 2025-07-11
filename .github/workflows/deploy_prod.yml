@@ -67,6 +67,7 @@ jobs:
   job-CE:
     name: Edition CE
     runs-on: [self-hosted, large]
+    environment: ${{github.event.inputs.channel}}
     if: github.event.inputs.ce == 'true'
     steps:
       - run: echo "CE"
@@ -96,6 +97,7 @@ jobs:
   job-BE:
     name: Edition BE
     runs-on: [self-hosted, large]
+    environment: ${{github.event.inputs.channel}}
     if: github.event.inputs.be == 'true' && vars.ALLOW_BE == 'true'
     steps:
       - run: echo "BE"
@@ -125,6 +127,7 @@ jobs:
   job-EE:
     name: Edition EE
     runs-on: [self-hosted, large]
+    environment: ${{github.event.inputs.channel}}
     if: github.event.inputs.ee == 'true'
     steps:
       - run: echo "EE"
@@ -154,6 +157,7 @@ jobs:
   job-FE:
     name: Edition FE
     runs-on: [self-hosted, large]
+    environment: ${{github.event.inputs.channel}}
     if: github.event.inputs.fe == 'true'
     steps:
       - run: echo "FE"
@@ -183,6 +187,7 @@ jobs:
   job-SE:
     name: Edition SE
     runs-on: [self-hosted, large]
+    environment: ${{github.event.inputs.channel}}
     if: github.event.inputs.se == 'true'
     steps:
       - run: echo "SE"
@@ -212,6 +217,7 @@ jobs:
   job-SE-plus:
     name: Edition SE+
     runs-on: [self-hosted, large]
+    environment: ${{github.event.inputs.channel}}
     if: github.event.inputs.se-plus == 'true'
     steps:
       - run: echo "SE+"
