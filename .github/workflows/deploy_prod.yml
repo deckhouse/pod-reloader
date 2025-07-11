@@ -28,6 +28,9 @@ on:
       ce:
         type: boolean
         description: CE
+      be:
+        type: boolean
+        description: BE (GutHub variable "ALLOW_BE" should be "true")
       ee:
         type: boolean
         description: EE
@@ -86,6 +89,35 @@ jobs:
       - uses: deckhouse/modules-actions/deploy@v2
         with:
           module_source: "${{ vars.PROD_REGISTRY }}/${{ vars.PROD_MODULE_SOURCE_NAME }}/ce/modules"
+          module_name: ${{ vars.MODULE_NAME }}
+          module_tag: ${{ github.event.inputs.tag }}
+          release_channel: ${{ github.event.inputs.channel }}
+
+  job-BE:
+    name: Edition BE
+    runs-on: [self-hosted, large]
+    if: github.event.inputs.be == 'true' && vars.ALLOW_BE == 'true'
+    steps:
+      - run: echo "BE"
+      - name: SET VAR
+        run: |
+          echo "MODULES_MODULE_SOURCE=$MODULES_REGISTRY/$MODULE_SOURCE_NAME/be/modules" >> "$GITHUB_ENV"
+      - name: ECHO VAR
+        run: |
+          echo $MODULES_MODULE_SOURCE
+      - uses: actions/checkout@v4
+      - uses: deckhouse/modules-actions/setup@v2
+        with:
+          registry: ${{ vars.PROD_REGISTRY }}
+          registry_login: ${{ vars.PROD_MODULES_REGISTRY_LOGIN }}
+          registry_password: ${{ secrets.PROD_MODULES_REGISTRY_PASSWORD }}
+      - name: Check previous release
+        run: |
+          chmod +x .github/check_previous_channel_release.sh
+          .github/check_previous_channel_release.sh $MODULES_MODULE_NAME be $RELEASE_CHANNEL $MODULES_MODULE_TAG license-token $MODULES_READ_REGISTRY_PASSWORD
+      - uses: deckhouse/modules-actions/deploy@v2
+        with:
+          module_source: "${{ vars.PROD_REGISTRY }}/${{ vars.PROD_MODULE_SOURCE_NAME }}/be/modules"
           module_name: ${{ vars.MODULE_NAME }}
           module_tag: ${{ github.event.inputs.tag }}
           release_channel: ${{ github.event.inputs.channel }}
