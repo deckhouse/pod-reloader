@@ -22,14 +22,14 @@ import:
 git:
   - add: /
     to: /
-    excludePaths:
-      - hooks/go
     includePaths:
       - .helmignore
       - charts
       - crds
       - docs
+      - enabled
       - hooks
       - monitoring
       - templates
       - Chart.yaml
+      - values.yaml
