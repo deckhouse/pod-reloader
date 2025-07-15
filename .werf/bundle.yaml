@@ -29,6 +29,8 @@ git:
       - docs
       - hooks
       - monitoring
+      - openapi
       - templates
+      - changelog.yaml
       - Chart.yaml
       - module.yaml
