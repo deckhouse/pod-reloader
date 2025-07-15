@@ -11,6 +11,12 @@ shell:
   install:
     - |
       yq n version "{{ env "CI_COMMIT_REF_NAME" }}" | yq r - -j > version.json
+git:
+- add: /changelog.yaml
+  to: /changelog.yaml
+- add: /module.yaml
+  to: /module.yaml
+
 ---
 image: release-channel-version
 fromImage: builder/scratch
@@ -21,3 +27,4 @@ import:
     after: install
     includePaths:
       - version.json
+      - module.yaml
