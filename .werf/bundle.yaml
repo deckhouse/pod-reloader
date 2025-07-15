@@ -11,6 +11,7 @@ import:
     includePaths:
     - images_digests.json
     - version.json
+    - changelog.yaml
     - module.yaml
     after: setup
   # Rendering .werf/choose-edition.yaml is required!
@@ -30,7 +31,5 @@ git:
       - docs
       - hooks
       - monitoring
-      - openapi
       - templates
-      - changelog.yaml
       - Chart.yaml
