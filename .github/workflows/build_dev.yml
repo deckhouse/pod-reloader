@@ -11,7 +11,7 @@ env:
   GOPROXY: ${{ secrets.GOPROXY }}
   SOURCE_REPO: ${{ secrets.SOURCE_REPO }}
   SOURCE_REPO_SSH_KEY: ${{ secrets.SOURCE_REPO_SSH_KEY }}
-  BASE_IMAGES_VERSION: ${{ vars.BASE_IMAGES_VERSION }}
+  BASE_IMAGES_VERSION: v0.5.11
 
 on:
   #pull_request:
