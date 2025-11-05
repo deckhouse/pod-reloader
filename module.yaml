@@ -1,4 +1,6 @@
 name: pod-reloader
+descriptions:
+  en: "The module utilizes Reloader. It provides the ability for automatic rollout on ConfigMap or Secret changes. The module uses annotations for operating. The module is running on **system** nodes."
 weight: 900
 stage: "General Availability"
 subsystems:
