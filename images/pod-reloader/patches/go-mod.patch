@@ -1,0 +1,46 @@
+diff --git a/go.mod b/go.mod
+index c630aac..263dec4 100644
+--- a/go.mod
++++ b/go.mod
+@@ -1,21 +1,21 @@
+ module github.com/stakater/Reloader
+ 
+-go 1.24.4
++go 1.25.3
+ 
+ require (
+-	github.com/argoproj/argo-rollouts v1.8.2
++	github.com/argoproj/argo-rollouts v1.8.3
+ 	github.com/openshift/api v0.0.0-20250411135543-10a8fa583797
+ 	github.com/openshift/client-go v0.0.0-20250402181141-b3bad3b645f2
+ 	github.com/parnurzeal/gorequest v0.3.0
+ 	github.com/prometheus/client_golang v1.22.0
+ 	github.com/sirupsen/logrus v1.9.3
+-	github.com/spf13/cobra v1.9.1
++	github.com/spf13/cobra v1.10.1
+ 	github.com/stretchr/testify v1.10.0
+ 	k8s.io/api v0.32.3
+ 	k8s.io/apimachinery v0.32.3
+ 	k8s.io/client-go v0.32.3
+ 	k8s.io/kubectl v0.32.3
+-	k8s.io/utils v0.0.0-20250321185631-1f6e0b77f77e
++	k8s.io/utils v0.0.0-20251002143259-bc988d571ff4
+ )
+ 
+ require (
+@@ -50,7 +50,7 @@ require (
+ 	github.com/prometheus/common v0.63.0 // indirect
+ 	github.com/prometheus/procfs v0.16.0 // indirect
+ 	github.com/smartystreets/goconvey v1.7.2 // indirect
+-	github.com/spf13/pflag v1.0.6 // indirect
++	github.com/spf13/pflag v1.0.9 // indirect
+ 	github.com/x448/float16 v0.8.4 // indirect
+ 	golang.org/x/net v0.39.0 // indirect
+ 	golang.org/x/oauth2 v0.29.0 // indirect
+@@ -91,4 +91,4 @@ replace (
+ 	k8s.io/sample-apiserver v0.0.0 => k8s.io/sample-apiserver v0.24.2
+ 	k8s.io/sample-cli-plugin v0.0.0 => k8s.io/sample-cli-plugin v0.24.2
+ 	k8s.io/sample-controller v0.0.0 => k8s.io/sample-controller v0.24.2
+-)
++)
+\ No newline at end of file
