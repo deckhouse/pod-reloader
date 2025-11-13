@@ -1,0 +1,91 @@
+diff --git a/go.mod b/go.mod
+index c630aac..263dec4 100644
+--- a/go.mod
++++ b/go.mod
+@@ -1,21 +1,21 @@
+ module github.com/stakater/Reloader
+ 
+-go 1.24.4
++go 1.25.3
+ 
+ require (
+-	github.com/argoproj/argo-rollouts v1.8.2
++	github.com/argoproj/argo-rollouts v1.8.3
+ 	github.com/openshift/api v0.0.0-20250411135543-10a8fa583797
+ 	github.com/openshift/client-go v0.0.0-20250402181141-b3bad3b645f2
+ 	github.com/parnurzeal/gorequest v0.3.0
+ 	github.com/prometheus/client_golang v1.22.0
+ 	github.com/sirupsen/logrus v1.9.3
+-	github.com/spf13/cobra v1.9.1
++	github.com/spf13/cobra v1.10.1
+ 	github.com/stretchr/testify v1.10.0
+ 	k8s.io/api v0.32.3
+ 	k8s.io/apimachinery v0.32.3
+ 	k8s.io/client-go v0.32.3
+ 	k8s.io/kubectl v0.32.3
+-	k8s.io/utils v0.0.0-20250321185631-1f6e0b77f77e
++	k8s.io/utils v0.0.0-20251002143259-bc988d571ff4
+ )
+ 
+ require (
+@@ -50,7 +50,7 @@ require (
+ 	github.com/prometheus/common v0.63.0 // indirect
+ 	github.com/prometheus/procfs v0.16.0 // indirect
+ 	github.com/smartystreets/goconvey v1.7.2 // indirect
+-	github.com/spf13/pflag v1.0.6 // indirect
++	github.com/spf13/pflag v1.0.9 // indirect
+ 	github.com/x448/float16 v0.8.4 // indirect
+ 	golang.org/x/net v0.39.0 // indirect
+ 	golang.org/x/oauth2 v0.29.0 // indirect
+@@ -91,4 +91,4 @@ replace (
+ 	k8s.io/sample-apiserver v0.0.0 => k8s.io/sample-apiserver v0.24.2
+ 	k8s.io/sample-cli-plugin v0.0.0 => k8s.io/sample-cli-plugin v0.24.2
+ 	k8s.io/sample-controller v0.0.0 => k8s.io/sample-controller v0.24.2
+-)
++)
+\ No newline at end of file
+diff --git a/go.sum b/go.sum
+index 126602f..5cb705c 100644
+--- a/go.sum
++++ b/go.sum
+@@ -1,5 +1,5 @@
+-github.com/argoproj/argo-rollouts v1.8.2 h1:DBvkYvFTEH/zJ9MxJerqz/NMWEgZcHY5vxztyCBS5ak=
+-github.com/argoproj/argo-rollouts v1.8.2/go.mod h1:xZIw+dg+B4IqMv5fNPenIBUiPb9xljL2st1xxkjhaC0=
++github.com/argoproj/argo-rollouts v1.8.3 h1:blbtQva4IK9r6gFh+dWkCrLnFdPOWiv9ubQYu36qeaA=
++github.com/argoproj/argo-rollouts v1.8.3/go.mod h1:kCAUvIfMGfOyVf3lvQbBt0nqQn4Pd+zB5/YwKv+UBa8=
+ github.com/beorn7/perks v1.0.1 h1:VlbKKnNfV8bJzeqoa4cOKqO6bYr3WgKZxO8Z16+hsOM=
+ github.com/beorn7/perks v1.0.1/go.mod h1:G2ZrVWU2WbWT9wwq4/hrbKbnv/1ERSJQ0ibhJ6rlkpw=
+ github.com/cespare/xxhash/v2 v2.3.0 h1:UL815xU9SqsFlibzuggzjXhog7bL6oX9BbNZnL2UFvs=
+@@ -104,10 +104,10 @@ github.com/smartystreets/assertions v1.2.0 h1:42S6lae5dvLc7BrLu/0ugRtcFVjoJNMC/N
+ github.com/smartystreets/assertions v1.2.0/go.mod h1:tcbTF8ujkAEcZ8TElKY+i30BzYlVhC/LOxJk7iOWnoo=
+ github.com/smartystreets/goconvey v1.7.2 h1:9RBaZCeXEQ3UselpuwUQHltGVXvdwm6cv1hgR6gDIPg=
+ github.com/smartystreets/goconvey v1.7.2/go.mod h1:Vw0tHAZW6lzCRk3xgdin6fKYcG+G3Pg9vgXWeJpQFMM=
+-github.com/spf13/cobra v1.9.1 h1:CXSaggrXdbHK9CF+8ywj8Amf7PBRmPCOJugH954Nnlo=
+-github.com/spf13/cobra v1.9.1/go.mod h1:nDyEzZ8ogv936Cinf6g1RU9MRY64Ir93oCnqb9wxYW0=
+-github.com/spf13/pflag v1.0.6 h1:jFzHGLGAlb3ruxLB8MhbI6A8+AQX/2eW4qeyNZXNp2o=
+-github.com/spf13/pflag v1.0.6/go.mod h1:McXfInJRrz4CZXVZOBLb0bTZqETkiAhM9Iw0y3An2Bg=
++github.com/spf13/cobra v1.10.1 h1:lJeBwCfmrnXthfAupyUTzJ/J4Nc1RsHC/mSRU2dll/s=
++github.com/spf13/cobra v1.10.1/go.mod h1:7SmJGaTHFVBY0jW4NXGluQoLvhqFQM+6XSKD+P4XaB0=
++github.com/spf13/pflag v1.0.9 h1:9exaQaMOCwffKiiiYk6/BndUBv+iRViNW+4lEMi0PvY=
++github.com/spf13/pflag v1.0.9/go.mod h1:McXfInJRrz4CZXVZOBLb0bTZqETkiAhM9Iw0y3An2Bg=
+ github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
+ github.com/stretchr/testify v1.3.0/go.mod h1:M5WIy9Dh21IEIfnGCwXGc5bZfKNJtfHm1UVUgZn+9EI=
+ github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
+@@ -185,8 +185,8 @@ k8s.io/kube-openapi v0.0.0-20250318190949-c8a335a9a2ff h1:/usPimJzUKKu+m+TE36gUy
+ k8s.io/kube-openapi v0.0.0-20250318190949-c8a335a9a2ff/go.mod h1:5jIi+8yX4RIb8wk3XwBo5Pq2ccx4FP10ohkbSKCZoK8=
+ k8s.io/kubectl v0.32.3 h1:VMi584rbboso+yjfv0d8uBHwwxbC438LKq+dXd5tOAI=
+ k8s.io/kubectl v0.32.3/go.mod h1:6Euv2aso5GKzo/UVMacV6C7miuyevpfI91SvBvV9Zdg=
+-k8s.io/utils v0.0.0-20250321185631-1f6e0b77f77e h1:KqK5c/ghOm8xkHYhlodbp6i6+r+ChV2vuAuVRdFbLro=
+-k8s.io/utils v0.0.0-20250321185631-1f6e0b77f77e/go.mod h1:OLgZIPagt7ERELqWJFomSt595RzquPNLL48iOWgYOg0=
++k8s.io/utils v0.0.0-20251002143259-bc988d571ff4 h1:SjGebBtkBqHFOli+05xYbK8YF1Dzkbzn+gDM4X9T4Ck=
++k8s.io/utils v0.0.0-20251002143259-bc988d571ff4/go.mod h1:OLgZIPagt7ERELqWJFomSt595RzquPNLL48iOWgYOg0=
+ sigs.k8s.io/json v0.0.0-20241014173422-cfa47c3a1cc8 h1:gBQPwqORJ8d8/YNZWEjoZs7npUVDpVXUUOFfW6CgAqE=
+ sigs.k8s.io/json v0.0.0-20241014173422-cfa47c3a1cc8/go.mod h1:mdzfpAEoE6DHQEN0uh9ZbOCuHbLK5wOm7dK4ctXE9Tg=
+ sigs.k8s.io/randfill v0.0.0-20250304075658-069ef1bbf016/go.mod h1:XeLlZ/jmk4i1HRopwe7/aU3H5n1zNUcX6TM94b3QxOY=
+@@ -195,4 +195,4 @@ sigs.k8s.io/randfill v1.0.0/go.mod h1:XeLlZ/jmk4i1HRopwe7/aU3H5n1zNUcX6TM94b3QxO
+ sigs.k8s.io/structured-merge-diff/v4 v4.6.0 h1:IUA9nvMmnKWcj5jl84xn+T5MnlZKThmUW1TdblaLVAc=
+ sigs.k8s.io/structured-merge-diff/v4 v4.6.0/go.mod h1:dDy58f92j70zLsuZVuUX5Wp9vtxXpaZnkPGWeqDfCps=
+ sigs.k8s.io/yaml v1.4.0 h1:Mk1wCc2gy/F0THH0TAp1QYyJNzRm2KCLy3o5ASXVI5E=
+-sigs.k8s.io/yaml v1.4.0/go.mod h1:Ejl7/uTz7PSA4eKMyQCUTnhZYNmLIl+5c2lQPGR2BPY=
++sigs.k8s.io/yaml v1.4.0/go.mod h1:Ejl7/uTz7PSA4eKMyQCUTnhZYNmLIl+5c2lQPGR2BPY=
+\ No newline at end of file
