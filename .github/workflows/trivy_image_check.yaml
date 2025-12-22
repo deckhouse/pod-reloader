@@ -48,7 +48,7 @@ jobs:
           dev_registry_user: ${{ vars.DEV_MODULES_REGISTRY_LOGIN }}
           dev_registry_password: ${{ secrets.DEV_MODULES_REGISTRY_PASSWORD }}
           deckhouse_private_repo: ${{ secrets.DECKHOUSE_PRIVATE_REPO }}
-          severity: "HIGH,CRITICAL"
+          severity: "LOW,MEDIUM,HIGH,CRITICAL"
   cve_scan:
     if: github.event_name != 'pull_request'
     name: Regular CVE scan
