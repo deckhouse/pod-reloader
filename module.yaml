@@ -1,7 +1,7 @@
 name: pod-reloader
 descriptions:
-  en: "Provides the ability for automatic rollout in case of changes to ConfigMap or Secret resources."
-  ru: "Предоставляет возможность автоматически произвести rollout в случае изменения ресурсов ConfigMap или Secret."
+  en: "Provides the ability for automatic rollout in case of changes to certain ConfigMaps or Secrets."
+  ru: "Предоставляет возможность автоматически перезапускать нагрузку в случае изменения определенных ConfigMap или Secret."
 weight: 900
 stage: "General Availability"
 subsystems:
