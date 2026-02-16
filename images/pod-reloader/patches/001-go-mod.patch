@@ -1,12 +1,12 @@
 diff --git a/go.mod b/go.mod
-index c630aac..05edecc 100644
+index c630aac..3ea5495 100644
 --- a/go.mod
 +++ b/go.mod
 @@ -1,21 +1,21 @@
  module github.com/stakater/Reloader
  
 -go 1.24.4
-+go 1.25.5
++go 1.25.7
  
  require (
 -	github.com/argoproj/argo-rollouts v1.8.2
