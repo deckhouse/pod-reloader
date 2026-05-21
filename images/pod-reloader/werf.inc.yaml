@@ -2,12 +2,13 @@
 image: {{ .ModuleNamePrefix }}{{ .ImageName }}-src-artifact
 fromImage: builder/src
 final: false
-git:
-- add: /images/pod-reloader/patches
-  to: /patches
-  stageDependencies:
-    install:
-    - '**/*'
+# TODO: uncomment when patches will be needed
+# git:
+# - add: /images/pod-reloader/patches
+#   to: /patches
+#   stageDependencies:
+#     install:
+#     - '**/*'
 secrets:
 - id: SOURCE_REPO
   value: {{ .SOURCE_REPO }}
@@ -15,7 +16,7 @@ shell:
   install:
   - cd /src
   - git clone --depth 1 -b {{ $.Versions.POD_RELOADER }} $(cat /run/secrets/SOURCE_REPO)/stakater/Reloader.git .
-  - git apply /patches/*.patch --verbose
+  # - git apply /patches/*.patch --verbose
   - rm -rf .git
 ---
 image: {{ .ModuleNamePrefix }}{{ .ImageName }}-artifact
