@@ -1,6 +1,6 @@
 ---
 image: {{ .ModuleNamePrefix }}{{ .ImageName }}-src-artifact
-fromImage: builder/src
+fromImage: {{ index $.Images "builder/src" }}
 final: false
 # TODO: uncomment when patches will be needed
 # git:
@@ -21,7 +21,7 @@ shell:
 ---
 image: {{ .ModuleNamePrefix }}{{ .ImageName }}-artifact
 final: false
-fromImage: builder/golang-alpine-1.26.3
+fromImage: {{ index $.Images "builder/golang-alpine-1.26.3" }}
 import:
 - image: {{ .ModuleNamePrefix }}{{ .ImageName }}-src-artifact
   add: /src
@@ -41,7 +41,7 @@ shell:
   - chmod 0755 /reloader
 ---
 image: {{ .ModuleNamePrefix }}{{ .ImageName }}
-fromImage: base/distroless
+fromImage: {{ index $.Images "base/distroless" }}
 import:
 - image: {{ .ModuleNamePrefix }}{{ .ImageName }}-artifact
   add: /reloader

@@ -9,11 +9,3 @@
 {{- $_ := unset $baseImages "REGISTRY_PATH" }}
 
 {{- $_ := set . "Images" $baseImages }}
-
-# base images artifacts
-{{- range $k, $v := .Images }}
----
-image: {{ $k }}
-from: {{ $v }}
-final: false
-{{- end }}
