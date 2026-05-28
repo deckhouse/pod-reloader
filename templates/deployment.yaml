@@ -73,6 +73,8 @@ spec:
           args:
             - --log-format=json
             - --auto-annotation=pod-reloader.deckhouse.io/auto
+            - --secret-auto-annotation=secret.pod-reloader.deckhouse.io/auto
+            - --configmap-auto-annotation=configmap.pod-reloader.deckhouse.io/auto
             - --auto-search-annotation=pod-reloader.deckhouse.io/search
             - --search-match-annotation=pod-reloader.deckhouse.io/match
             - --configmap-annotation=pod-reloader.deckhouse.io/configmap-reload
@@ -80,6 +82,8 @@ spec:
             - --pause-deployment-annotation=pod-reloader.deckhouse.io/pause-period
             - --pause-deployment-time-annotation=pod-reloader.deckhouse.io/paused-at
             - --reload-on-create={{ .Values.podReloader.reloadOnCreate }}
+            - --reload-on-delete={{ .Values.podReloader.reloadOnDelete }}
+            - --reload-strategy={{ .Values.podReloader.reloadStrategy }}
           readinessProbe:
             failureThreshold: 3
             httpGet:
