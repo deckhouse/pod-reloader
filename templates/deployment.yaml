@@ -83,7 +83,7 @@ spec:
             - --pause-deployment-time-annotation=pod-reloader.deckhouse.io/paused-at
             - --reload-on-create={{ .Values.podReloader.reloadOnCreate }}
             - --reload-on-delete={{ .Values.podReloader.reloadOnDelete }}
-            - --reload-strategy={{ .Values.podReloader.reloadStrategy }}
+            - --reload-strategy={{ .Values.podReloader.reloadStrategy | toLower }}
           readinessProbe:
             failureThreshold: 3
             httpGet:

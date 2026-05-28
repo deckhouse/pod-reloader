@@ -57,13 +57,13 @@ properties:
     x-examples: [true, false]
   reloadStrategy:
     type: string
-    default: env-vars
+    default: Env-vars
     enum:
-      - env-vars
-      - annotations
+      - Env-vars
+      - Annotations
     description: |
       Strategy to use for triggering reload.
 
-      `env-vars` - Adds a dummy environment variable to any container referencing the changed resource (e.g., Deployment, StatefulSet, etc.). This forces Kubernetes to perform a rolling update.
-      `annotations` - Adds a pod-reloader.deckhouse.io/last-reloaded-from annotation to the pod template metadata. Ideal for GitOps tools like ArgoCD, as it avoids triggering unwanted sync diffs.
-    x-examples: [env-vars, annotations]
+      `Env-vars` - Adds a dummy environment variable to any container referencing the changed resource (e.g., Deployment, StatefulSet, etc.). This forces Kubernetes to perform a rolling update.
+      `Annotations` - Adds a pod-reloader.deckhouse.io/last-reloaded-from annotation to the pod template metadata. Ideal for GitOps tools like ArgoCD, as it avoids triggering unwanted sync diffs.
+    x-examples: [Env-vars, Annotations]
