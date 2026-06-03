@@ -111,3 +111,72 @@ kind: ConfigMap
 metadata:
   name: nginx-config
 ```
+
+## Reloading only when Secrets change (ignoring ConfigMaps)
+
+Use `secret.pod-reloader.deckhouse.io/auto: "true"` instead of the general `pod-reloader.deckhouse.io/auto` annotation if you want the workload to restart only when a referenced Secret changes, not when a ConfigMap changes. Similarly, use `configmap.pod-reloader.deckhouse.io/auto: "true"` to react only to ConfigMap changes.
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+  annotations:
+    secret.pod-reloader.deckhouse.io/auto: "true"
+spec:
+  template:
+    spec:
+      containers:
+        - name: nginx
+          env:
+            - name: SECRET_WORD
+              valueFrom:
+                secretKeyRef:
+                  name: nginx-secret-value
+                  key: extra
+          volumeMounts:
+            - name: pages
+              mountPath: "/usr/share/nginx/pages"
+      volumes:
+        - name: pages
+          configMap:
+            name: nginx-pages
+---
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: nginx-secret-value
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-pages
+```
+
+## Pausing rollouts during batch config updates
+
+Use `pod-reloader.deckhouse.io/pause-period` to prevent repeated restarts when several ConfigMaps or Secrets are updated in quick succession. The workload will be rolled out only once, after the pause period expires.
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  annotations:
+    pod-reloader.deckhouse.io/auto: "true"
+    pod-reloader.deckhouse.io/pause-period: "30s"
+spec:
+  template:
+    spec:
+      containers:
+        - name: nginx
+          envFrom:
+            - configMapRef:
+                name: nginx-config
+            - secretRef:
+                name: nginx-secret
+```
+

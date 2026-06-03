@@ -15,10 +15,13 @@ All annotations are described here. You can find examples in the [Examples](exam
 | Annotation                                   | Resource                           | Description                                                                                                  | Acceptable values                             |
 | -------------------------------------------- |------------------------------------| ------------------------------------------------------------------------------------------------------------ | --------------------------------------------- |
 | `pod-reloader.deckhouse.io/auto` | Deployment, DaemonSet, StatefulSet | Changes to associated (mounted or used as environment variables) ConfigMap or Secret will cause a restart of this controller's pods | `"true"`, `"false"` |
+| `secret.pod-reloader.deckhouse.io/auto` | Deployment, DaemonSet, StatefulSet | Changes to associated Secrets only will cause a restart of this controller's pods | `"true"`, `"false"` |
+| `configmap.pod-reloader.deckhouse.io/auto` | Deployment, DaemonSet, StatefulSet | Changes to associated ConfigMaps only will cause a restart of this controller's pods | `"true"`, `"false"` |
 | `pod-reloader.deckhouse.io/search` | Deployment, DaemonSet, StatefulSet | If this annotation is present, a restart will only occur when ConfigMaps or Secrets with the annotation `pod-reloader.deckhouse.io/match: "true"` change | `"true"`, `"false"` |
 | `pod-reloader.deckhouse.io/configmap-reload` | Deployment, DaemonSet, StatefulSet | Specifying a list of ConfigMaps that the controller depends on | `"some-cm"`, `"some-cm1,some-cm2"` |
 | `pod-reloader.deckhouse.io/secret-reload` | Deployment, DaemonSet, StatefulSet | Specifying a list of secrets that the controller depends on | `"some-secret"`, `"some-secret1,some-secret2"` |
 | `pod-reloader.deckhouse.io/match` | Secret, ConfigMap | Annotation by which related resources are selected to track changes | `"true"`, `"false"` |
+| `pod-reloader.deckhouse.io/pause-period` | Deployment | Pauses rollouts for the specified duration when several ConfigMaps or Secrets are updated in quick succession | `30s`, `5m` |
 
 {{< alert level="warning" >}}
 Annotation `pod-reloader.deckhouse.io/search` cannot be used together with `pod-reloader.deckhouse.io/auto: "true"` because Reloader will ignore `pod-reloader.deckhouse.io/search` and `pod-reloader.deckhouse.io/match`. For the right behavior set `pod-reloader.deckhouse.io/auto` to `"false"` or delete it.
