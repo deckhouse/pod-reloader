@@ -90,6 +90,9 @@ spec:
             - --reload-strategy=annotations
               {{- end }}
             {{- end }}
+          env:
+          - name: RELOADER_NAMESPACE
+            value: d8-{{ $.Chart.Name }}
           readinessProbe:
             failureThreshold: 3
             httpGet:
