@@ -12,7 +12,7 @@
   {{- $_ := set $ctx "ImagePath" (printf "/images/%s" $ctx.ImageName) }}
   {{- $_ := set $ctx "ModuleNamePrefix" "" }}
   {{- $_ := set $ctx "ModuleDir" "/" }}
-  {{- $_ := set $ctx "GOPROXY" $Root.GOPROXY }}
+  {{- $_ := set $ctx "GOPROXY" $.GOPROXY }}
   {{- $_ := set $ctx "SOURCE_REPO" $Root.SOURCE_REPO }}
   {{- $_ := set $ctx "DistroPackagesProxy" $Root.DistroPackagesProxy }}
 ---
