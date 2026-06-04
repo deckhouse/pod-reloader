@@ -47,3 +47,23 @@ properties:
 
       Enabling the parameter will cause the workload to restart not only when changing the corresponding ConfigMap or Secret, but also when creating it.
     x-examples: [true, false]
+  reloadOnDelete:
+    type: boolean
+    default: false
+    description: |
+      Rollout the workload in case of deleting a ConfigMap or Secret.
+
+      Enabling the parameter will cause the workload to restart when deleting the corresponding ConfigMap or Secret.
+    x-examples: [true, false]
+  reloadStrategy:
+    type: string
+    default: EnvVars
+    enum:
+      - EnvVars
+      - Annotations
+    description: |
+      Strategy to use for triggering reload.
+
+      `EnvVars` - Adds a dummy environment variable to any container referencing the changed resource (e.g., Deployment, StatefulSet, etc.). This forces Kubernetes to perform a rolling update.
+      `Annotations` - Adds a pod-reloader.deckhouse.io/last-reloaded-from annotation to the pod template metadata. Ideal for GitOps tools like ArgoCD, as it avoids triggering unwanted sync diffs.
+    x-examples: [EnvVars, Annotations]

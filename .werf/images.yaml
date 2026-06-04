@@ -1,7 +1,11 @@
+{{- $Root := . }}
+
 {{- $ImagesBuildFiles := .Files.Glob "images/*/{Dockerfile,werf.inc.yaml}" }}
 
 {{- range $path, $content := $ImagesBuildFiles  }}
   {{- $ctx := dict }}
+  {{- $_ := set $ctx "Root" $ }}
+  {{- $_ := set $ctx "Images" $.Images }}
   {{- $_ := set $ctx "ImageName" ($path | split "/")._1 }}
   {{- $_ := set $ctx "SOURCE_REPO" (env "SOURCE_REPO" "https://github.com") }}
   {{- $_ := set $ctx "MODULE_EDITION" $.MODULE_EDITION }}

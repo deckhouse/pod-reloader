@@ -73,11 +73,26 @@ spec:
           args:
             - --log-format=json
             - --auto-annotation=pod-reloader.deckhouse.io/auto
+            - --secret-auto-annotation=secret.pod-reloader.deckhouse.io/auto
+            - --configmap-auto-annotation=configmap.pod-reloader.deckhouse.io/auto
             - --auto-search-annotation=pod-reloader.deckhouse.io/search
             - --search-match-annotation=pod-reloader.deckhouse.io/match
             - --configmap-annotation=pod-reloader.deckhouse.io/configmap-reload
             - --secret-annotation=pod-reloader.deckhouse.io/secret-reload
+            - --pause-deployment-annotation=pod-reloader.deckhouse.io/pause-period
+            - --pause-deployment-time-annotation=pod-reloader.deckhouse.io/paused-at
             - --reload-on-create={{ .Values.podReloader.reloadOnCreate }}
+            - --reload-on-delete={{ .Values.podReloader.reloadOnDelete }}
+            {{- if .Values.podReloader.reloadStrategy }}
+              {{- if eq .Values.podReloader.reloadStrategy "EnvVars" }}
+            - --reload-strategy=env-vars
+              {{- else if eq .Values.podReloader.reloadStrategy "Annotations" }}
+            - --reload-strategy=annotations
+              {{- end }}
+            {{- end }}
+          env:
+          - name: RELOADER_NAMESPACE
+            value: d8-{{ $.Chart.Name }}
           readinessProbe:
             failureThreshold: 3
             httpGet:

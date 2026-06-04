@@ -1,13 +1,14 @@
 ---
 image: {{ .ModuleNamePrefix }}{{ .ImageName }}-src-artifact
-fromImage: builder/src
+fromImage: {{ index $.Images "builder/src" }}
 final: false
-git:
-- add: /images/pod-reloader/patches
-  to: /patches
-  stageDependencies:
-    install:
-    - '**/*'
+# TODO: uncomment when patches will be needed
+# git:
+# - add: /images/pod-reloader/patches
+#   to: /patches
+#   stageDependencies:
+#     install:
+#     - '**/*'
 secrets:
 - id: SOURCE_REPO
   value: {{ .SOURCE_REPO }}
@@ -15,12 +16,12 @@ shell:
   install:
   - cd /src
   - git clone --depth 1 -b {{ $.Versions.POD_RELOADER }} $(cat /run/secrets/SOURCE_REPO)/stakater/Reloader.git .
-  - git apply /patches/*.patch --verbose
+  # - git apply /patches/*.patch --verbose
   - rm -rf .git
 ---
 image: {{ .ModuleNamePrefix }}{{ .ImageName }}-artifact
 final: false
-fromImage: builder/golang-alpine
+fromImage: {{ index $.Images "builder/golang-alpine-1.26.3" }}
 import:
 - image: {{ .ModuleNamePrefix }}{{ .ImageName }}-src-artifact
   add: /src
@@ -40,7 +41,7 @@ shell:
   - chmod 0755 /reloader
 ---
 image: {{ .ModuleNamePrefix }}{{ .ImageName }}
-fromImage: base/distroless
+fromImage: {{ index $.Images "base/distroless" }}
 import:
 - image: {{ .ModuleNamePrefix }}{{ .ImageName }}-artifact
   add: /reloader
