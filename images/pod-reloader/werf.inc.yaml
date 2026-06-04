@@ -50,32 +50,3 @@ import:
 imageSpec:
   config:
     entrypoint: ["/reloader"]
----
-image: {{ .ImageName }}-builder
-fromImage: builder/golang-bullseye
-final: false
-...
-mount:
-{{ include "mount points for golang builds" . }}
-secrets:
-- id: GOPROXY
-  value: {{ .GOPROXY }}
-shell:
-  beforeInstall:
-  {{- include "debian packages proxy" . | nindent 2 }}
-  - apt update
-  - DEBIAN_FRONTEND=noninteractive apt install -y musl-dev
-  setup:
-...
-  - GOPROXY=$(cat /run/secrets/GOPROXY) go mod download
----
-image: {{ .ImageName }}-ui
-final: false
-fromImage: builder/node-alpine-22.16
-...
-shell:
-  install:
-  - cd /ui
-  {{- include "yarn3 packages proxy" . | nindent 2 }}
-  - yarn install
-...
