@@ -21,7 +21,7 @@ shell:
 ---
 image: {{ .ModuleNamePrefix }}{{ .ImageName }}-artifact
 final: false
-fromImage: {{ index $.Images "builder/golang-alpine-1.26.3" }}
+fromImage: {{ index $.Images "builder/golang-1.26" }}
 import:
 - image: {{ .ModuleNamePrefix }}{{ .ImageName }}-src-artifact
   add: /src
