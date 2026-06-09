@@ -9,6 +9,7 @@ config:
       - GOPROXY
       - SOURCE_REPO
       - MODULE_EDITION
+      - DISTRO_PACKAGES_PROXY
     allowUncommittedFiles:
       - "base_images.yml"
   secrets:
