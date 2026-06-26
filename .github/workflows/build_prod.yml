@@ -54,12 +54,14 @@ jobs:
           registry: ${{ vars.DEV_REGISTRY }}
           registry_login: ${{ vars.DEV_MODULES_REGISTRY_LOGIN }}
           registry_password: ${{ secrets.DEV_MODULES_REGISTRY_PASSWORD }}
-      - uses: deckhouse/modules-actions/build@v2
+      - uses: deckhouse/modules-actions/build@v15
         with:
           module_source: "${{ vars.PROD_REGISTRY }}/${{ vars.PROD_MODULE_SOURCE_NAME }}/ce/modules"
           module_name: ${{ vars.MODULE_NAME }}
           module_tag: ${{ github.ref_name }}
           secondary_repo: "${{ vars.DEV_MODULE_SOURCE }}/${{ vars.MODULE_NAME }}"
+          registry_user: ${{ vars.DEV_MODULES_REGISTRY_LOGIN }}
+          registry_password: ${{ secrets.DEV_MODULES_REGISTRY_PASSWORD }}
           source_repo: ${{ secrets.SOURCE_REPO }}
           source_repo_ssh_key: ${{ secrets.SOURCE_REPO_SSH_KEY }}
 
@@ -97,12 +99,14 @@ jobs:
           registry: ${{ vars.DEV_REGISTRY }}
           registry_login: ${{ vars.DEV_MODULES_REGISTRY_LOGIN }}
           registry_password: ${{ secrets.DEV_MODULES_REGISTRY_PASSWORD }}
-      - uses: deckhouse/modules-actions/build@v2
+      - uses: deckhouse/modules-actions/build@v15
         with:
           module_source: "${{ vars.PROD_REGISTRY }}/${{ vars.PROD_MODULE_SOURCE_NAME }}/be/modules"
           module_name: ${{ vars.MODULE_NAME }}
           module_tag: ${{ github.ref_name }}
           secondary_repo: "${{ vars.DEV_MODULE_SOURCE }}/${{ vars.MODULE_NAME }}"
+          registry_user: ${{ vars.DEV_MODULES_REGISTRY_LOGIN }}
+          registry_password: ${{ secrets.DEV_MODULES_REGISTRY_PASSWORD }}
           source_repo: ${{ secrets.SOURCE_REPO }}
           source_repo_ssh_key: ${{ secrets.SOURCE_REPO_SSH_KEY }}
 
@@ -140,12 +144,14 @@ jobs:
           registry: ${{ vars.DEV_REGISTRY }}
           registry_login: ${{ vars.DEV_MODULES_REGISTRY_LOGIN }}
           registry_password: ${{ secrets.DEV_MODULES_REGISTRY_PASSWORD }}
-      - uses: deckhouse/modules-actions/build@v2
+      - uses: deckhouse/modules-actions/build@v15
         with:
           module_source: "${{ vars.PROD_REGISTRY }}/${{ vars.PROD_MODULE_SOURCE_NAME }}/ee/modules"
           module_name: ${{ vars.MODULE_NAME }}
           module_tag: ${{ github.ref_name }}
           secondary_repo: "${{ vars.DEV_MODULE_SOURCE }}/${{ vars.MODULE_NAME }}"
+          registry_user: ${{ vars.DEV_MODULES_REGISTRY_LOGIN }}
+          registry_password: ${{ secrets.DEV_MODULES_REGISTRY_PASSWORD }}
           source_repo: ${{ secrets.SOURCE_REPO }}
           source_repo_ssh_key: ${{ secrets.SOURCE_REPO_SSH_KEY }}
 
@@ -183,12 +189,14 @@ jobs:
           registry: ${{ vars.DEV_REGISTRY }}
           registry_login: ${{ vars.DEV_MODULES_REGISTRY_LOGIN }}
           registry_password: ${{ secrets.DEV_MODULES_REGISTRY_PASSWORD }}
-      - uses: deckhouse/modules-actions/build@v2
+      - uses: deckhouse/modules-actions/build@v15
         with:
           module_source: "${{ vars.PROD_REGISTRY }}/${{ vars.PROD_MODULE_SOURCE_NAME }}/fe/modules"
           module_name: ${{ vars.MODULE_NAME }}
           module_tag: ${{ github.ref_name }}
           secondary_repo: "${{ vars.DEV_MODULE_SOURCE }}/${{ vars.MODULE_NAME }}"
+          registry_user: ${{ vars.DEV_MODULES_REGISTRY_LOGIN }}
+          registry_password: ${{ secrets.DEV_MODULES_REGISTRY_PASSWORD }}
           source_repo: ${{ secrets.SOURCE_REPO }}
           source_repo_ssh_key: ${{ secrets.SOURCE_REPO_SSH_KEY }}
 
@@ -226,12 +234,14 @@ jobs:
           registry: ${{ vars.DEV_REGISTRY }}
           registry_login: ${{ vars.DEV_MODULES_REGISTRY_LOGIN }}
           registry_password: ${{ secrets.DEV_MODULES_REGISTRY_PASSWORD }}
-      - uses: deckhouse/modules-actions/build@v2
+      - uses: deckhouse/modules-actions/build@v15
         with:
           module_source: "${{ vars.PROD_REGISTRY }}/${{ vars.PROD_MODULE_SOURCE_NAME }}/se/modules"
           module_name: ${{ vars.MODULE_NAME }}
           module_tag: ${{ github.ref_name }}
           secondary_repo: "${{ vars.DEV_MODULE_SOURCE }}/${{ vars.MODULE_NAME }}"
+          registry_user: ${{ vars.DEV_MODULES_REGISTRY_LOGIN }}
+          registry_password: ${{ secrets.DEV_MODULES_REGISTRY_PASSWORD }}
           source_repo: ${{ secrets.SOURCE_REPO }}
           source_repo_ssh_key: ${{ secrets.SOURCE_REPO_SSH_KEY }}
 
@@ -269,11 +279,13 @@ jobs:
           registry: ${{ vars.DEV_REGISTRY }}
           registry_login: ${{ vars.DEV_MODULES_REGISTRY_LOGIN }}
           registry_password: ${{ secrets.DEV_MODULES_REGISTRY_PASSWORD }}
-      - uses: deckhouse/modules-actions/build@v2
+      - uses: deckhouse/modules-actions/build@v15
         with:
           module_source: "${{ vars.PROD_REGISTRY }}/${{ vars.PROD_MODULE_SOURCE_NAME }}/se-plus/modules"
           module_name: ${{ vars.MODULE_NAME }}
           module_tag: ${{ github.ref_name }}
           secondary_repo: "${{ vars.DEV_MODULE_SOURCE }}/${{ vars.MODULE_NAME }}"
+          registry_user: ${{ vars.DEV_MODULES_REGISTRY_LOGIN }}
+          registry_password: ${{ secrets.DEV_MODULES_REGISTRY_PASSWORD }}
           source_repo: ${{ secrets.SOURCE_REPO }}
           source_repo_ssh_key: ${{ secrets.SOURCE_REPO_SSH_KEY }}
