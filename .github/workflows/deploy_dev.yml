@@ -11,7 +11,7 @@ env:
   GOLANG_VERSION: 1.26.4
   GOPROXY: ${{ secrets.GOPROXY }}
   SOURCE_REPO: ${{ secrets.SOURCE_REPO }}
-  BASE_IMAGES_VERSION: v1.0.40
+  BASE_IMAGES_VERSION: v1.1.5
 
 on:
   workflow_dispatch:
@@ -73,7 +73,7 @@ jobs:
           registry_login: ${{ vars.DEV_MODULES_REGISTRY_LOGIN }}
           registry_password: ${{ secrets.DEV_MODULES_REGISTRY_PASSWORD }}
       - if: ${{ github.event.inputs.enableBuild == 'true' }}
-        uses: deckhouse/modules-actions/build@v2
+        uses: deckhouse/modules-actions/build@v15
         with:
           module_source: "${{ vars.DEV_MODULE_SOURCE }}"
           module_name: ${{ vars.MODULE_NAME }}
