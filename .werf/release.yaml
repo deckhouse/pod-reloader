@@ -19,3 +19,7 @@ git:
     to: /
     includePaths:
       - docs/*.md
+      - docs/images/*.png
+      - docs/images/*.jpeg
+      - docs/images/*.jpg
+      - docs/images/*.svg
