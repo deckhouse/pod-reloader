@@ -33,3 +33,5 @@ git:
       - templates
       - Chart.yaml
       - values.yaml
+    excludePaths:
+      - docs/internal

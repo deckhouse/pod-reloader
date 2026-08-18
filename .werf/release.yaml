@@ -19,3 +19,5 @@ git:
     to: /
     includePaths:
       - docs
+    excludePaths:
+      - docs/internal
