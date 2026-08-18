@@ -10,9 +10,13 @@ import:
       - version.json
       - changelog.yaml
       - module.yaml
-      - crds
-      - docs
   - image: choose-edition
     add: /openapi
     to: /openapi
     after: install
+git:
+  - add: /
+    to: /
+    includePaths:
+      - crds
+      - docs
