@@ -26,14 +26,12 @@ git:
       - .helmignore
       - charts
       - crds
-      - docs/*.md
-      - docs/images/*.png
-      - docs/images/*.jpeg
-      - docs/images/*.jpg
-      - docs/images/*.svg
+      - docs
       - enabled
       - hooks
       - monitoring
       - templates
       - Chart.yaml
       - values.yaml
+    excludePaths:
+      - docs/internal
