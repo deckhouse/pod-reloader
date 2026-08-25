@@ -79,6 +79,7 @@ spec:
             - --search-match-annotation=pod-reloader.deckhouse.io/match
             - --configmap-annotation=pod-reloader.deckhouse.io/configmap-reload
             - --secret-annotation=pod-reloader.deckhouse.io/secret-reload
+            - --ignore-annotation=pod-reloader.deckhouse.io/ignore
             - --pause-deployment-annotation=pod-reloader.deckhouse.io/pause-period
             - --pause-deployment-time-annotation=pod-reloader.deckhouse.io/paused-at
             - --reload-on-create={{ .Values.podReloader.reloadOnCreate }}
