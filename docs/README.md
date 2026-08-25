@@ -20,6 +20,7 @@ All annotations are described here. You can find examples in the [Examples](exam
 | `pod-reloader.deckhouse.io/search` | Deployment, DaemonSet, StatefulSet | If this annotation is present, a restart will only occur when ConfigMaps or Secrets with the annotation `pod-reloader.deckhouse.io/match: "true"` change | `"true"`, `"false"` |
 | `pod-reloader.deckhouse.io/configmap-reload` | Deployment, DaemonSet, StatefulSet | Specifying a list of ConfigMaps that the controller depends on | `"some-cm"`, `"some-cm1,some-cm2"` |
 | `pod-reloader.deckhouse.io/secret-reload` | Deployment, DaemonSet, StatefulSet | Specifying a list of secrets that the controller depends on | `"some-secret"`, `"some-secret1,some-secret2"` |
+| `pod-reloader.deckhouse.io/ignore`    | Secret, ConfigMap | Changing ConfigMap or Secret with this annotation will not occur restarts                                                                                                                        | `"true"`, `"false"` |
 | `pod-reloader.deckhouse.io/match` | Secret, ConfigMap | Annotation by which related resources are selected to track changes | `"true"`, `"false"` |
 | `pod-reloader.deckhouse.io/pause-period` | Deployment | Pauses rollouts for the specified duration when several ConfigMaps or Secrets are updated in quick succession | `30s`, `5m` |
 
