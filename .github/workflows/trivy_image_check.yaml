@@ -46,7 +46,7 @@ jobs:
         env:
           REPO: ${{ github.event.repository.name }}
         run: echo "role_name=${REPO##*/}" >> $GITHUB_OUTPUT
-      - uses: deckhouse/modules-actions/cve_scan@v17
+      - uses: deckhouse/modules-actions/cve_scan@v16
         with:
           source_tag: pr${{ github.event.number }}
           case: "External Modules"
@@ -73,7 +73,7 @@ jobs:
         env:
           REPO: ${{ github.event.repository.name }}
         run: echo "role_name=${REPO##*/}" >> $GITHUB_OUTPUT
-      - uses: deckhouse/modules-actions/cve_scan@v17
+      - uses: deckhouse/modules-actions/cve_scan@v16
         with:
           source_tag: ${{ github.event.inputs.release_branch || github.event.repository.default_branch }}
           case: "External Modules"
