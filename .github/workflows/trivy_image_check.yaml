@@ -66,7 +66,7 @@ jobs:
           role_name: ${{ steps.split.outputs.role_name }}
   cve_scan:
     if: github.event_name != 'pull_request' && (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success')
-    name: ${{ github.event_name == 'workflow_run' && 'Release CVE scan' || 'Regular CVE scan' }}
+    name: Regular CVE scan
     runs-on: [self-hosted, regular]
     permissions:
       contents: read
