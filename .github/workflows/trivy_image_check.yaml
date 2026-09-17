@@ -17,7 +17,7 @@ on:
         description: "Optional. Whether to scan last several releases or not. true/false. For scheduled pipelines it is always true. Default is: false."
         required: false
       latest_releases_amount:
-        description: "Optional. Number of latest releases to scan. Default is: 3"
+        description: "Optional. Number of latest release lines (major.minor) to scan. Default is: 1"
         required: false
       release_in_dev:
         description: "Optional. If true, the release tag is taken from the dev registry. Default is: false"
@@ -85,7 +85,12 @@ jobs:
           dev_registry_user: ${{ vars.DEV_MODULES_REGISTRY_LOGIN }}
           dev_registry_password: ${{ secrets.DEV_MODULES_REGISTRY_PASSWORD }}
           scan_several_latest_releases: ${{ github.event.inputs.scan_several_latest_releases || 'True' }}
-          latest_releases_amount: ${{ github.event.inputs.latest_releases_amount || '3' }}
+          # Release lines (major.minor) to scan besides main. pod-reloader has a
+          # single line, 1.0, on every release channel. Raise the number when a
+          # new minor is published while the previous one is still on a channel.
+          # The prod registry also holds v0.1.0 and v0.2.0, which are not
+          # releases: any value above the number of real lines pulls them in.
+          latest_releases_amount: ${{ github.event.inputs.latest_releases_amount || '1' }}
           release_in_dev: ${{ github.event.inputs.release_in_dev || 'False' }}
           trivy_reports_log_output: ${{ github.event.inputs.trivy_reports_log_output || '1' }}
           role_name: ${{ steps.split.outputs.role_name }}
