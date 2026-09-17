@@ -8,6 +8,11 @@ on:
   push:
     branches:
       - main
+  # Release scan: the prod build pushes the tagged image first (about 15
+  # minutes), so the scan waits for that workflow instead of the tag push.
+  workflow_run:
+    workflows: ["Build and push for prod"]
+    types: [completed]
   workflow_dispatch:
     inputs:
       release_branch:
@@ -60,8 +65,8 @@ jobs:
           trivy_reports_log_output: ${{ github.event.inputs.trivy_reports_log_output || '1' }}
           role_name: ${{ steps.split.outputs.role_name }}
   cve_scan:
-    if: github.event_name != 'pull_request'
-    name: Regular CVE scan
+    if: github.event_name != 'pull_request' && (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success')
+    name: ${{ github.event_name == 'workflow_run' && 'Release CVE scan' || 'Regular CVE scan' }}
     runs-on: [self-hosted, regular]
     permissions:
       contents: read
@@ -75,7 +80,8 @@ jobs:
         run: echo "role_name=${REPO##*/}" >> $GITHUB_OUTPUT
       - uses: deckhouse/modules-actions/cve_scan@v17
         with:
-          source_tag: ${{ github.event.inputs.release_branch || github.event.repository.default_branch }}
+          # Release scan takes the tag that was just built; other runs take main.
+          source_tag: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_branch || github.event.inputs.release_branch || github.event.repository.default_branch }}
           case: "External Modules"
           external_module_name: ${{ vars.MODULE_NAME }}
           prod_registry: "registry.deckhouse.io"
@@ -84,7 +90,7 @@ jobs:
           dev_registry: ${{ vars.DEV_REGISTRY }}
           dev_registry_user: ${{ vars.DEV_MODULES_REGISTRY_LOGIN }}
           dev_registry_password: ${{ secrets.DEV_MODULES_REGISTRY_PASSWORD }}
-          scan_several_latest_releases: ${{ github.event.inputs.scan_several_latest_releases || 'True' }}
+          scan_several_latest_releases: ${{ github.event_name == 'workflow_run' && 'False' || github.event.inputs.scan_several_latest_releases || 'True' }}
           # Release lines (major.minor) to scan besides main. pod-reloader has a
           # single line, 1.0, on every release channel. Raise the number when a
           # new minor is published while the previous one is still on a channel.
