@@ -91,11 +91,7 @@ jobs:
           dev_registry_user: ${{ vars.DEV_MODULES_REGISTRY_LOGIN }}
           dev_registry_password: ${{ secrets.DEV_MODULES_REGISTRY_PASSWORD }}
           scan_several_latest_releases: ${{ github.event_name == 'workflow_run' && 'False' || github.event.inputs.scan_several_latest_releases || 'True' }}
-          # Release lines (major.minor) to scan besides main. pod-reloader has a
-          # single line, 1.0, on every release channel. Raise the number when a
-          # new minor is published while the previous one is still on a channel.
-          # The prod registry also holds v0.1.0 and v0.2.0, which are not
-          # releases: any value above the number of real lines pulls them in.
+          # The module has one release line, 1.0, on every channel.
           latest_releases_amount: ${{ github.event.inputs.latest_releases_amount || '1' }}
           release_in_dev: ${{ github.event.inputs.release_in_dev || 'False' }}
           trivy_reports_log_output: ${{ github.event.inputs.trivy_reports_log_output || '1' }}
