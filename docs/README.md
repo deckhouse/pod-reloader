@@ -23,6 +23,7 @@ All annotations are described here. You can find examples in the [Examples](exam
 | `pod-reloader.deckhouse.io/ignore`    | Secret, ConfigMap | Changing ConfigMap or Secret with this annotation will not occur restarts                                                                                                                        | `"true"`, `"false"` |
 | `pod-reloader.deckhouse.io/match` | Secret, ConfigMap | Annotation by which related resources are selected to track changes | `"true"`, `"false"` |
 | `pod-reloader.deckhouse.io/pause-period` | Deployment | Pauses rollouts for the specified duration when several ConfigMaps or Secrets are updated in quick succession | `30s`, `5m` |
+| `pod-reloader.deckhouse.io/rollout-strategy` | Rollout | Defines how an Argo Rollouts `Rollout` is updated: `restart` sets `spec.restartAt` (a pod restart without a new rollout), `rollout` performs a full rollout | `"restart"`, `"rollout"` |
 
 {{< alert level="warning" >}}
 Annotation `pod-reloader.deckhouse.io/search` cannot be used together with `pod-reloader.deckhouse.io/auto: "true"` because Reloader will ignore `pod-reloader.deckhouse.io/search` and `pod-reloader.deckhouse.io/match`. For the right behavior set `pod-reloader.deckhouse.io/auto` to `"false"` or delete it.
@@ -31,3 +32,25 @@ Annotation `pod-reloader.deckhouse.io/search` cannot be used together with `pod-
 {{< alert level="warning" >}}
 Annotations `pod-reloader.deckhouse.io/configmap-reload` and `pod-reloader.deckhouse.io/secret-reload` cannot be used together with `pod-reloader.deckhouse.io/auto: "true"` because Reloader will ignore `pod-reloader.deckhouse.io/configmap-reload` and `pod-reloader.deckhouse.io/secret-reload`. For the right behavior set `pod-reloader.deckhouse.io/auto` to `"false"` or delete it.
 {{< /alert >}}
+
+## Argo Rollouts support
+
+The module can also roll out the `Rollout` resource of [Argo Rollouts](https://argoproj.github.io/argo-rollouts/). The support is disabled by default; enable it with the [`enableArgoRollouts`](configuration.html#parameters-enableargorollouts) parameter:
+
+```yaml
+apiVersion: deckhouse.io/v1alpha1
+kind: ModuleConfig
+metadata:
+  name: pod-reloader
+spec:
+  enabled: true
+  version: 1
+  settings:
+    enableArgoRollouts: true
+```
+
+Argo Rollouts must be installed in the cluster (the `rollouts.argoproj.io` CRD must exist) before enabling the parameter, otherwise `Rollout` resources will not be watched.
+
+Once enabled, a `Rollout` reacts to the same annotations as a Deployment (`pod-reloader.deckhouse.io/auto`, `pod-reloader.deckhouse.io/search`, `pod-reloader.deckhouse.io/configmap-reload`, etc.).
+
+If the `pod-reloader.deckhouse.io/rollout-strategy` annotation is not set, the `rollout` strategy is used.
