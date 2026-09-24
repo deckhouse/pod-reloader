@@ -33,6 +33,17 @@ rules:
       - get
       - update
       - patch
+{{- if .Values.podReloader.enableArgoRollouts }}
+  - apiGroups:
+      - "argoproj.io"
+    resources:
+      - rollouts
+    verbs:
+      - list
+      - get
+      - update
+      - patch
+{{- end }}
   - apiGroups:
       - "extensions"
     resources:

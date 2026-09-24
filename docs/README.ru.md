@@ -23,6 +23,7 @@ title: "Модуль pod-reloader"
 | `pod-reloader.deckhouse.io/ignore`    | Secret, ConfigMap | При изменении ConfigMap'ов или Secret'ов с этой аннотацией перезапуск подов происходить не будет                                                                                                                        | `"true"`, `"false"` |
 | `pod-reloader.deckhouse.io/match`            | Secret, ConfigMap                  | Аннотация, по которой из связанных ресурсов выбираются те, изменения которых отслеживаются                                                                               | `"true"`, `"false"` |
 | `pod-reloader.deckhouse.io/pause-period`     | Deployment                         | Приостанавливает rollout на заданное время при пакетном обновлении нескольких ConfigMap или Secret одновременно | `30s`, `5m` |
+| `pod-reloader.deckhouse.io/rollout-strategy` | Rollout                            | Определяет способ обновления ресурса `Rollout` Argo Rollouts: `restart` устанавливает `spec.restartAt` (перезапуск подов без нового выката), `rollout` выполняет полный выкат | `"restart"`, `"rollout"` |
 
 {{< alert level="warning" >}}
 Аннотация `pod-reloader.deckhouse.io/search` не может быть использована вместе с `pod-reloader.deckhouse.io/auto: "true"`, так как Reloader будет игнорировать `pod-reloader.deckhouse.io/search` и `pod-reloader.deckhouse.io/match`. Для корректной работы установите аннотации `pod-reloader.deckhouse.io/auto` значение `"false"` или удалите ее.
@@ -31,3 +32,25 @@ title: "Модуль pod-reloader"
 {{< alert level="warning" >}}
 Аннотации `pod-reloader.deckhouse.io/configmap-reload` и `pod-reloader.deckhouse.io/secret-reload` не могут быть использованы вместе с `pod-reloader.deckhouse.io/auto: "true"`, так как Reloader будет игнорировать `pod-reloader.deckhouse.io/configmap-reload` и `pod-reloader.deckhouse.io/secret-reload`. Для корректной работы установите аннотации `pod-reloader.deckhouse.io/auto` значение `"false"` или удалите ее.
 {{< /alert >}}
+
+## Поддержка Argo Rollouts
+
+Модуль также может перезапускать ресурс `Rollout` [Argo Rollouts](https://argoproj.github.io/argo-rollouts/). По умолчанию поддержка отключена, включить ее можно параметром [`enableArgoRollouts`](configuration.html#parameters-enableargorollouts):
+
+```yaml
+apiVersion: deckhouse.io/v1alpha1
+kind: ModuleConfig
+metadata:
+  name: pod-reloader
+spec:
+  enabled: true
+  version: 1
+  settings:
+    enableArgoRollouts: true
+```
+
+Перед включением параметра в кластере должен быть установлен Argo Rollouts (должен существовать CRD `rollouts.argoproj.io`), иначе ресурсы `Rollout` отслеживаться не будут.
+
+После включения ресурс `Rollout` реагирует на те же аннотации, что и Deployment (`pod-reloader.deckhouse.io/auto`, `pod-reloader.deckhouse.io/search`, `pod-reloader.deckhouse.io/configmap-reload` и другие).
+
+Если аннотация `pod-reloader.deckhouse.io/rollout-strategy` не задана, используется стратегия `rollout`.

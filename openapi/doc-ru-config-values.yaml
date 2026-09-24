@@ -29,4 +29,12 @@ properties:
       Стратегия для использования при триггере перезапуска.
 
       `env-vars` - Добавляет dummy переменную окружения для любого контейнера, который использует измененный ресурс (например, Deployment, StatefulSet и т.д.). Это заставляет Kubernetes выполнить rolling update.
-      `annotations` - Добавляет pod-reloader.deckhouse.io/last-reloaded-from аннотацию в метаданные шаблона пода. Идеально для GitOps инструментов, таких как ArgoCD, так как избегает триггеров нежелательных синхронизаций.
+      `annotations` - Добавляет `reloader.stakater.com/last-reloaded-from` аннотацию в метаданные шаблона пода. Идеально для GitOps инструментов, таких как ArgoCD, так как избегает триггеров нежелательных синхронизаций.
+  enableArgoRollouts:
+    type: boolean
+    description: |
+      Включение поддержки ресурса `Rollout` Argo Rollouts.
+
+      Если параметр включен, pod-reloader отслеживает ресурсы `Rollout` (`argoproj.io/v1alpha1`) и перезапускает их при изменении ConfigMap или Secret так же, как Deployment, DaemonSet и StatefulSet.
+
+      Требуется установленный в кластере Argo Rollouts (должен существовать CRD `rollouts.argoproj.io`).

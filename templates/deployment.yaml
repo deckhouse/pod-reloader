@@ -80,10 +80,12 @@ spec:
             - --configmap-annotation=pod-reloader.deckhouse.io/configmap-reload
             - --secret-annotation=pod-reloader.deckhouse.io/secret-reload
             - --ignore-annotation=pod-reloader.deckhouse.io/ignore
+            - --rollout-strategy-annotation=pod-reloader.deckhouse.io/rollout-strategy
             - --pause-deployment-annotation=pod-reloader.deckhouse.io/pause-period
             - --pause-deployment-time-annotation=pod-reloader.deckhouse.io/paused-at
             - --reload-on-create={{ .Values.podReloader.reloadOnCreate }}
             - --reload-on-delete={{ .Values.podReloader.reloadOnDelete }}
+            - --is-Argo-Rollouts={{ .Values.podReloader.enableArgoRollouts }}
             {{- if .Values.podReloader.reloadStrategy }}
               {{- if eq .Values.podReloader.reloadStrategy "EnvVars" }}
             - --reload-strategy=env-vars
