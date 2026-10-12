@@ -1,0 +1,7 @@
+linters-settings:
+  no-cyrillic:
+    exclude-rules:
+      directories:
+        # RBACv2 templates carry the localized title and description of each capability.
+        # That is product text shown in the console, not a source comment.
+        - templates/rbacv2
