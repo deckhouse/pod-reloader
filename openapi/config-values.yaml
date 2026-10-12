@@ -65,5 +65,15 @@ properties:
       Strategy to use for triggering reload.
 
       `EnvVars` - Adds a dummy environment variable to any container referencing the changed resource (e.g., Deployment, StatefulSet, etc.). This forces Kubernetes to perform a rolling update.
-      `Annotations` - Adds a pod-reloader.deckhouse.io/last-reloaded-from annotation to the pod template metadata. Ideal for GitOps tools like ArgoCD, as it avoids triggering unwanted sync diffs.
+      `Annotations` - Adds a `reloader.stakater.com/last-reloaded-from` annotation to the pod template metadata. Ideal for GitOps tools like ArgoCD, as it avoids triggering unwanted sync diffs.
     x-examples: [EnvVars, Annotations]
+  enableArgoRollouts:
+    type: boolean
+    default: false
+    description: |
+      Enable support for the Argo Rollouts `Rollout` resource.
+
+      When enabled, pod-reloader watches `Rollout` resources (`argoproj.io/v1alpha1`) and rolls them out on ConfigMap or Secret changes in the same way as Deployments, DaemonSets and StatefulSets.
+
+      Requires Argo Rollouts to be installed in the cluster (the `rollouts.argoproj.io` CRD must exist).
+    x-examples: [true, false]

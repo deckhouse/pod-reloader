@@ -1,0 +1,93 @@
+diff --git a/internal/pkg/handler/upgrade.go b/internal/pkg/handler/upgrade.go
+index 5570ee2..02e67ed 100644
+--- a/internal/pkg/handler/upgrade.go
++++ b/internal/pkg/handler/upgrade.go
+@@ -569,10 +569,7 @@ func secretProviderClassAnnotationReloaded(oldAnnotations map[string]string, new
+ }
+ 
+ func getReloaderAnnotationKey() string {
+-	return fmt.Sprintf("%s/%s",
+-		constants.ReloaderAnnotationPrefix,
+-		constants.LastReloadedFromAnnotation,
+-	)
++	return options.LastReloadedFromAnnotation
+ }
+ 
+ func createReloadedAnnotations(target *common.ReloadSource, upgradeFuncs callbacks.RollingUpgradeFuncs) (map[string]string, []byte, error) {
+diff --git a/internal/pkg/options/flags.go b/internal/pkg/options/flags.go
+index 84c19bf..97768df 100644
+--- a/internal/pkg/options/flags.go
++++ b/internal/pkg/options/flags.go
+@@ -51,6 +51,9 @@ var (
+ 	SearchMatchAnnotation = "reloader.stakater.com/match"
+ 	// RolloutStrategyAnnotation is an annotation to define rollout update strategy
+ 	RolloutStrategyAnnotation = "reloader.stakater.com/rollout-strategy"
++	// LastReloadedFromAnnotation is an annotation set by Reloader to describe the
++	// resource that triggered the last reload
++	LastReloadedFromAnnotation = constants.ReloaderAnnotationPrefix + "/" + constants.LastReloadedFromAnnotation
+ 	// PauseDeploymentAnnotation is an annotation to define the time period to pause a deployment after
+ 	// a configmap/secret change has been detected. Valid values are described here: https://pkg.go.dev/time#ParseDuration
+ 	// only positive values are allowed
+diff --git a/internal/pkg/testutil/kube.go b/internal/pkg/testutil/kube.go
+index ab64d84..c35f893 100644
+--- a/internal/pkg/testutil/kube.go
++++ b/internal/pkg/testutil/kube.go
+@@ -3,7 +3,6 @@ package testutil
+ import (
+ 	"context"
+ 	"encoding/json"
+-	"fmt"
+ 	"math/rand"
+ 	"sort"
+ 	"strconv"
+@@ -790,10 +789,7 @@ func GetResourceSHAFromEnvVar(containers []v1.Container, envVar string) string {
+ 
+ // GetResourceSHAFromAnnotation returns the SHA value of given environment variable
+ func GetResourceSHAFromAnnotation(podAnnotations map[string]string) string {
+-	lastReloadedResourceName := fmt.Sprintf("%s/%s",
+-		constants.ReloaderAnnotationPrefix,
+-		constants.LastReloadedFromAnnotation,
+-	)
++	lastReloadedResourceName := options.LastReloadedFromAnnotation
+ 
+ 	annotationJson, ok := podAnnotations[lastReloadedResourceName]
+ 	if !ok {
+diff --git a/internal/pkg/util/util.go b/internal/pkg/util/util.go
+index 42f8d54..4239479 100644
+--- a/internal/pkg/util/util.go
++++ b/internal/pkg/util/util.go
+@@ -90,6 +90,13 @@ func ConfigureReloaderFlags(cmd *cobra.Command) {
+ 	cmd.PersistentFlags().StringVar(&options.SecretReloaderAutoAnnotation, "secret-auto-annotation", "secret.reloader.stakater.com/auto", "annotation to detect changes in secrets")
+ 	cmd.PersistentFlags().StringVar(&options.AutoSearchAnnotation, "auto-search-annotation", "reloader.stakater.com/search", "annotation to detect changes in configmaps or secrets tagged with special match annotation")
+ 	cmd.PersistentFlags().StringVar(&options.SearchMatchAnnotation, "search-match-annotation", "reloader.stakater.com/match", "annotation to mark secrets or configmaps to match the search")
++	cmd.PersistentFlags().StringVar(&options.SecretProviderClassUpdateOnChangeAnnotation, "secretproviderclass-annotation", "secretproviderclass.reloader.stakater.com/reload", "annotation to detect changes in secretproviderclasses, specified by name")
++	cmd.PersistentFlags().StringVar(&options.SecretProviderClassReloaderAutoAnnotation, "secretproviderclass-auto-annotation", "secretproviderclass.reloader.stakater.com/auto", "annotation to detect changes in secretproviderclasses")
++	cmd.PersistentFlags().StringVar(&options.ConfigmapExcludeReloaderAnnotation, "configmap-exclude-annotation", "configmaps.exclude.reloader.stakater.com/reload", "annotation to exclude configmaps from being watched, specified by name")
++	cmd.PersistentFlags().StringVar(&options.SecretExcludeReloaderAnnotation, "secret-exclude-annotation", "secrets.exclude.reloader.stakater.com/reload", "annotation to exclude secrets from being watched, specified by name")
++	cmd.PersistentFlags().StringVar(&options.SecretProviderClassExcludeReloaderAnnotation, "secretproviderclass-exclude-annotation", "secretproviderclasses.exclude.reloader.stakater.com/reload", "annotation to exclude secretproviderclasses from being watched, specified by name")
++	cmd.PersistentFlags().StringVar(&options.RolloutStrategyAnnotation, "rollout-strategy-annotation", "reloader.stakater.com/rollout-strategy", "annotation to define the update strategy of an Argo Rollouts rollout")
++	cmd.PersistentFlags().StringVar(&options.LastReloadedFromAnnotation, "last-reloaded-from-annotation", options.LastReloadedFromAnnotation, "annotation set by Reloader to describe the resource that triggered the last reload")
+ 	cmd.PersistentFlags().StringVar(&options.PauseDeploymentAnnotation, "pause-deployment-annotation", "deployment.reloader.stakater.com/pause-period", "annotation to define the time period to pause a deployment after a configmap/secret change has been detected")
+ 	cmd.PersistentFlags().StringVar(&options.PauseDeploymentTimeAnnotation, "pause-deployment-time-annotation", "deployment.reloader.stakater.com/paused-at", "annotation to indicate when a deployment was paused by Reloader")
+ 	cmd.PersistentFlags().StringVar(&options.LogFormat, "log-format", "", "Log format to use (empty string for text, or JSON)")
+diff --git a/pkg/common/common.go b/pkg/common/common.go
+index 4360dd4..912d575 100644
+--- a/pkg/common/common.go
++++ b/pkg/common/common.go
+@@ -59,6 +59,8 @@ type ReloaderOptions struct {
+ 	SearchMatchAnnotation string `json:"searchMatchAnnotation"`
+ 	// RolloutStrategyAnnotation is the annotation key used to define the rollout update strategy for workloads
+ 	RolloutStrategyAnnotation string `json:"rolloutStrategyAnnotation"`
++	// LastReloadedFromAnnotation is the annotation key set by Reloader to describe the resource that triggered the last reload
++	LastReloadedFromAnnotation string `json:"lastReloadedFromAnnotation"`
+ 	// PauseDeploymentAnnotation is the annotation key used to define the time period to pause a deployment after
+ 	PauseDeploymentAnnotation string `json:"pauseDeploymentAnnotation"`
+ 	// PauseDeploymentTimeAnnotation is the annotation key used to indicate when a deployment was paused by Reloader
+@@ -365,6 +367,7 @@ func GetCommandLineOptions() *ReloaderOptions {
+ 	CommandLineOptions.AutoSearchAnnotation = options.AutoSearchAnnotation
+ 	CommandLineOptions.SearchMatchAnnotation = options.SearchMatchAnnotation
+ 	CommandLineOptions.RolloutStrategyAnnotation = options.RolloutStrategyAnnotation
++	CommandLineOptions.LastReloadedFromAnnotation = options.LastReloadedFromAnnotation
+ 	CommandLineOptions.PauseDeploymentAnnotation = options.PauseDeploymentAnnotation
+ 	CommandLineOptions.PauseDeploymentTimeAnnotation = options.PauseDeploymentTimeAnnotation
+ 	CommandLineOptions.LogFormat = options.LogFormat

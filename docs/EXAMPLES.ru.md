@@ -180,3 +180,42 @@ spec:
                 name: nginx-secret
 ```
 
+## Перезапуск ресурса `Rollout` Argo Rollouts
+
+Сначала включите параметр `enableArgoRollouts: true` в конфигурации модуля. После этого ресурс `Rollout` обрабатывается по тем же аннотациям, что и Deployment. Необязательная аннотация `pod-reloader.deckhouse.io/rollout-strategy` определяет способ обновления ресурса: `rollout` (значение по умолчанию) выполняет полный выкат с заданными canary- или blue-green-шагами, `restart` только перезапускает поды через `spec.restartAt`.
+
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: nginx-rollout
+  annotations:
+    pod-reloader.deckhouse.io/auto: "true"
+    pod-reloader.deckhouse.io/rollout-strategy: "restart"
+spec:
+  strategy:
+    canary:
+      steps:
+        - setWeight: 25
+        - pause: {duration: 30s}
+  template:
+    spec:
+      containers:
+        - name: nginx
+          envFrom:
+            - configMapRef:
+                name: nginx-config
+            - secretRef:
+                name: nginx-secret
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+---
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: nginx-secret
+```
