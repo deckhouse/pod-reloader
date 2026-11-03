@@ -11,7 +11,7 @@ env:
   GOLANG_VERSION: 1.26.4
   GOPROXY: ${{ secrets.GOPROXY }}
   SOURCE_REPO: ${{ secrets.SOURCE_REPO }}
-  BASE_IMAGES_VERSION: v2.1.7
+  BASE_IMAGES_VERSION: v3.1.12
 
 on:
   workflow_dispatch:
